@@ -28,8 +28,9 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=0
+current_page=1
 FILE_NAME_0=457;Vala;0;EUTF-8;1;1;0;%2Fhome%2Fbitwalk%2Fプロジェクト%2Fvala-samples%2Fhellogtk.vala;0;4
+FILE_NAME_1=1977;Vala;0;EUTF-8;1;1;0;%2Fhome%2Fbitwalk%2Fプロジェクト%2Fvala-samples%2Fgtk_about_dialog.vala;0;4
 
 [VTE]
 last_dir=/home/bitwalk
