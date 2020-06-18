@@ -3,14 +3,14 @@ public class MyWindow : Gtk.ApplicationWindow {
 
 	/* The constructor of the window */
 	internal MyWindow (MyApplication app) {
-		Object (application: app, title: "GNOME Button");
+		Object (application: app, title: "ボタン");
 
-		var button = new Gtk.Button.with_label ("Click Me");
+		var button = new Gtk.Button.with_label ("クリックしてください。");
 		button.clicked.connect (this.reverse_label);
 		button.show ();
 
 		this.window_position = Gtk.WindowPosition.CENTER;
-		this.set_default_size (250,50);
+		this.set_default_size (250, 50);
 		this.add (button);
 	}
 
