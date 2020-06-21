@@ -1,3 +1,4 @@
+#!/usr/bin/env vala
 /* This is the application. */
 public class Application : Gtk.Application {
 

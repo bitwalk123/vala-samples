@@ -1,3 +1,4 @@
+#!/usr/bin/env vala
 using Gtk;
  
 int main (string[] args) {

@@ -1,3 +1,5 @@
+#!/usr/bin/env vala
+
 public class MyWindow : Gtk.ApplicationWindow {
 
 	internal MyWindow (MyApplication app) {

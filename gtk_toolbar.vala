@@ -1,3 +1,5 @@
+#!/usr/bin/env vala
+
 /* This is the Window */
 class MyWindow : Gtk.ApplicationWindow {
 

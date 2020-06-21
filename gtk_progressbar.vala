@@ -1,3 +1,4 @@
+#!/usr/bin/env vala
 /*
  * https://developer.gnome.org/gnome-devel-demos/stable/progressbar.vala.html.en
  */

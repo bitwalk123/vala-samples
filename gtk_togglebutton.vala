@@ -1,3 +1,4 @@
+#!/usr/bin/env vala
 public class MyWindow : Gtk.ApplicationWindow {
 
 	Gtk.Spinner spinner;
