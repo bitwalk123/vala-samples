@@ -2,7 +2,7 @@
 
 public class MyWindow : Gtk.ApplicationWindow {
 	internal MyWindow (MyApplication app) {
-		Object (application: app, title: "RadioButton Example");
+		Object (application: app, title: "ラジオボタン");
 
 		this.border_width = 20;
 		this.set_default_size (250, 100);
@@ -11,13 +11,13 @@ public class MyWindow : Gtk.ApplicationWindow {
 
 		//Create a Radio Button
 		var button1 = new Gtk.RadioButton (null);
-		button1.set_label ("Button 1");
+		button1.set_label ("ボタンＡ");
 
 		//Create a RadioButton with a label, and add it to the same group as button1.
-		var button2 = new Gtk.RadioButton.with_label (button1.get_group(),"Button 2");
+		var button2 = new Gtk.RadioButton.with_label (button1.get_group(),"ボタンＢ");
 
 		//Create a RadioButton with a label, adding it to button1's group.
-		var button3 = new Gtk.RadioButton.with_label_from_widget (button1, "Button 3");
+		var button3 = new Gtk.RadioButton.with_label_from_widget (button1, "ボタンＣ");
 
 		//Attach the buttons to a grid.
 		var grid = new Gtk.Grid ();

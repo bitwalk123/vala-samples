@@ -7,12 +7,12 @@ public class MyWindow : Gtk.ApplicationWindow {
 
 	/* Constructor */
 	internal MyWindow (MyApplication app) {
-		Object (application: app, title: "GNOME Button");
+		Object (application: app, title: "ボタン");
 
 		this.window_position = Gtk.WindowPosition.CENTER;
 		this.set_default_size (250,50);
 
-		var button = new Gtk.Button.with_label ("Click Me");
+		var button = new Gtk.Button.with_label ("クリックしてください");
 
 		/* Connect the button's "clicked" signal to
 		 * the signal handler (aka. this.callback function).
@@ -26,13 +26,13 @@ public class MyWindow : Gtk.ApplicationWindow {
 
 	/* The signal handler for the buttons 'clicked' signal. */
 	void on_button_click (Gtk.Button button) {
-		var dialog = new Gtk.Dialog.with_buttons ("A Gtk+ Dialog", this,
-                                                          Gtk.DialogFlags.MODAL,
+		var dialog = new Gtk.Dialog.with_buttons ("ダイアログ", this,
+														  Gtk.DialogFlags.MODAL,
                                                           Gtk.Stock.OK,
                                                           Gtk.ResponseType.OK, null);
 
 		var content_area = dialog.get_content_area ();
-		var label = new Gtk.Label ("This demonstrates a dialog with a label");
+		var label = new Gtk.Label ("ダイアログにラベルを表示したデモです。");
 
 		content_area.add (label);
 
@@ -49,7 +49,7 @@ public class MyWindow : Gtk.ApplicationWindow {
 	/* Signal handler for the 'response' signal of the dialog. */
         void on_response (Gtk.Dialog dialog, int response_id) {
 
-                /* To see the int value of the ResponseType. This is only
+        /* To see the int value of the ResponseType. This is only
 		 * for demonstration purposes.*/
                 print ("response is %d\n", response_id);
 

@@ -4,9 +4,9 @@
  */
 public class MyWindow : Gtk.ApplicationWindow {
 	internal MyWindow (MyApplication app) {
-		Object (application: app, title: "Welcome to GNOME");
+		Object (application: app, title: "ラベル");
 
-		var label = new Gtk.Label ("Hello GNOME!");
+		var label = new Gtk.Label ("これはラベルです。");
 
 		this.add (label);
 		this.set_default_size (200, 100);
