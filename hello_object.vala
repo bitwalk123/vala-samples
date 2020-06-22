@@ -13,7 +13,7 @@ public class HelloWorld : Gtk.Application {
 		win.title = "Hello, World!";
 
 		win.border_width = 10;
-		win.set_default_size (300, 100);
+		win.set_default_size (350, 70);
 		win.window_position = Gtk.WindowPosition.CENTER;
 		this.add_window (win);
 
