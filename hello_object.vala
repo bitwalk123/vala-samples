@@ -24,7 +24,6 @@ public class HelloWorld : Gtk.Application {
 	}
 }
 
-/* The main function creates the application and runs it.*/
 int main (string[] args) {
 	var app = new HelloWorld ();
 	return app.run (args);
