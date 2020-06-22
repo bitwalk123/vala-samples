@@ -8,7 +8,6 @@ public class HelloWorld : Gtk.Application {
     }
 
     protected override void activate () {
-
         var win = new Gtk.Window ();
         win.title = "Hello, World!";
 
