@@ -1,43 +1,32 @@
 #!/usr/bin/env vala
-/* A window in the application */
-public class MyWindow : Gtk.ApplicationWindow {
 
-	/* The constructor of the window */
-	internal MyWindow (MyApplication app) {
-		Object (application: app, title: "ボタン");
+public class MyButton : Gtk.Window {
 
-		var button = new Gtk.Button.with_label ("クリックしてください。");
-		button.clicked.connect (this.reverse_label);
-		button.show ();
+	public MyButton () {
+		this.destroy.connect (Gtk.main_quit);
+        this.title = "ボタン";
+        this.border_width = 10;
+        //this.set_default_size (350, 70);
+        this.window_position = Gtk.WindowPosition.CENTER;
 
-		this.window_position = Gtk.WindowPosition.CENTER;
-		this.set_default_size (250, 50);
-		this.add (button);
+		var but = new Gtk.Button.with_label ("ボタン");
+		but.clicked.connect (this.on_clicked);
+
+		Gtk.Box box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+		box.pack_start (but, true, true, 0);
+		this.add (box);
 	}
 
-	/* The callback function connected to the
-	 * 'clicked' signal of the button.
-	 */
-	void reverse_label (Gtk.Button button) {
-		button.label = button.label.reverse ();
-	}
-}
-
-/* This is the application. */
-public class MyApplication : Gtk.Application {
-
-	/* This is the constructor */
-	internal MyApplication () {
-		Object (application_id: "org.example.MyApplication");
-	}
-
-	/* Override the activate signal of GLib.Application */
-	protected override void activate () {
-		new MyWindow (this).show ();
+	void on_clicked (Gtk.Button button) {
+		print ("button was clicked.\n");
 	}
 }
 
-/* main creates and runs the application */
-public int main (string[] args) {
-	return new MyApplication ().run (args);
+public static int main (string[] args) {
+	Gtk.init (ref args);
+
+	MyButton app = new MyButton ();
+	app.show_all ();
+	Gtk.main ();
+	return 0;
 }
