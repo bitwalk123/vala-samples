@@ -1,29 +1,26 @@
 #!/usr/bin/env vala
 using Gtk;
 
-public class HelloWorld : Gtk.Application {
+public class HelloWorld : Gtk.Window {
 
     public HelloWorld () {
-        Object (application_id: "org.example.helloworld");
-    }
+		this.destroy.connect (Gtk.main_quit);
+        this.title = "Hello, World!";
 
-    protected override void activate () {
-        var win = new Gtk.Window ();
-        win.title = "Hello, World!";
-
-        win.border_width = 10;
-        win.set_default_size (350, 70);
-        win.window_position = Gtk.WindowPosition.CENTER;
-        this.add_window (win);
+        this.border_width = 10;
+        this.set_default_size (350, 70);
+        this.window_position = Gtk.WindowPosition.CENTER;
 
         var label = new Gtk.Label ("こんにちは、世界！");    
-        win.add (label);
-
-        win.show_all ();
+        this.add (label);
     }
 }
 
-int main (string[] args) {
-    var app = new HelloWorld ();
-    return app.run (args);
+public static int main (string[] args) {
+	Gtk.init (ref args);
+
+	HelloWorld app = new HelloWorld ();
+	app.show_all ();
+	Gtk.main ();
+	return 0;
 }
