@@ -4,7 +4,7 @@ using Gtk;
 public class HelloWorld : Gtk.Window {
 
     public HelloWorld () {
-		this.destroy.connect (Gtk.main_quit);
+        this.destroy.connect (Gtk.main_quit);
         this.title = "Hello, World!";
 
         this.border_width = 10;
@@ -17,10 +17,10 @@ public class HelloWorld : Gtk.Window {
 }
 
 public static int main (string[] args) {
-	Gtk.init (ref args);
+    Gtk.init (ref args);
 
-	HelloWorld app = new HelloWorld ();
-	app.show_all ();
-	Gtk.main ();
-	return 0;
+    HelloWorld app = new HelloWorld ();
+    app.show_all ();
+    Gtk.main ();
+    return 0;
 }
