@@ -5,10 +5,10 @@ public class MyButton : Gtk.Window {
     public MyButton () {
         this.destroy.connect (Gtk.main_quit);
         this.title = "ボタン";
-        this.border_width = 10;
+        this.border_width = 0;
         this.window_position = Gtk.WindowPosition.CENTER;
 
-        var but = new Gtk.Button.with_label ("ボタン");
+        var but = new Gtk.Button.with_label ("クリックして下さい");
         but.clicked.connect (this.on_clicked);
 
         Gtk.Box box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
@@ -17,7 +17,7 @@ public class MyButton : Gtk.Window {
 	}
 
     void on_clicked (Gtk.Button button) {
-        print ("button was clicked.\n");
+        print ("ボタンがクリックされました。\n");
 	}
 }
 
