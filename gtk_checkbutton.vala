@@ -12,7 +12,7 @@ public class MyCheckButton : Gtk.Window {
         cb1.toggled.connect (this.on_toggled);
         var cb2 = new Gtk.CheckButton.with_label ("チェックボタンＢ");
         cb2.toggled.connect (this.on_toggled);
-        var cb3 = new Gtk.CheckButton.with_label ("チェックボタンＡ");
+        var cb3 = new Gtk.CheckButton.with_label ("チェックボタンＣ");
         cb3.toggled.connect (this.on_toggled);
 
         Gtk.Box box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
