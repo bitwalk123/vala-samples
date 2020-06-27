@@ -14,11 +14,11 @@ public class MyButton : Gtk.Window {
         Gtk.Box box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
         box.pack_start (but, true, true, 0);
         this.add (box);
-	}
+    }
 
     void on_clicked (Gtk.Button button) {
         print ("ボタンがクリックされました。\n");
-	}
+    }
 }
 
 public static int main (string[] args) {
