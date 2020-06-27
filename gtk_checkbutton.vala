@@ -1,53 +1,42 @@
 #!/usr/bin/env vala
-/* A window in the application */
-class MyWindow : Gtk.ApplicationWindow {
 
-	/* The constructor */
-	internal MyWindow (MyApplication app) {
-		Object (application: app, title: "チェックボタン");
+public class MyCheckButton : Gtk.Window {
 
-		this.set_default_size (300, 100);
-		this.border_width = 10;
+    public MyCheckButton () {
+        this.destroy.connect (Gtk.main_quit);
+        this.title = "チェックボタン";
+        this.border_width = 0;
+        this.window_position = Gtk.WindowPosition.CENTER;
 
-		var checkbutton = new Gtk.CheckButton.with_label ("タイトルの表示");
+        var cb1 = new Gtk.CheckButton.with_label ("チェックボタンＡ");
+        cb1.toggled.connect (this.on_toggled);
+        var cb2 = new Gtk.CheckButton.with_label ("チェックボタンＢ");
+        cb2.toggled.connect (this.on_toggled);
+        var cb3 = new Gtk.CheckButton.with_label ("チェックボタンＡ");
+        cb3.toggled.connect (this.on_toggled);
 
-		/* Connect the checkbutton to the
-		 * callback function (aka. signal handler).
-		 */
-		checkbutton.toggled.connect (this.toggled_cb);
-
-		/* Add the button to the this window */
-		this.add (checkbutton);
-
-		checkbutton.set_active (true);
-		checkbutton.show ();
+        Gtk.Box box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+        box.pack_start (cb1, true, true, 0);
+        box.pack_start (cb2, true, true, 0);
+        box.pack_start (cb3, true, true, 0);
+        this.add (box);
 	}
 
-	/* The signal handler for the 'toggled' signal of the checkbutton. */
-	void toggled_cb (Gtk.ToggleButton checkbutton) {
-		if (checkbutton.get_active())
-			this.set_title ("CheckButton Example");
-		else
-			this.set_title ("");
+    void on_toggled (Gtk.ToggleButton tb) {
+        if (tb.get_active()) {
+			print (tb.get_label() + "は「オン」になりました。\n");
+		}
+		else {
+			print (tb.get_label() + "は「オフ」になりました。\n");
+		}
 	}
 }
 
-/* This is the application */
-class MyApplication : Gtk.Application {
+public static int main (string[] args) {
+    Gtk.init (ref args);
 
-	/* The constructor */
-	internal MyApplication () {
-		Object (application_id: "org.example.checkbutton");
-	}
-
-	/* Override the activate signal of GLib.Application */
-	protected override void activate () {
-		new MyWindow (this).show ();
-	}
-
-}
-
-/* main creates and runs the application */
-int main (string[] args) {
-	return new MyApplication ().run (args);
+    MyCheckButton app = new MyCheckButton ();
+    app.show_all ();
+    Gtk.main ();
+    return 0;
 }
