@@ -20,7 +20,7 @@ public class MyCheckButton : Gtk.Window {
         box.pack_start (cb2, true, true, 0);
         box.pack_start (cb3, true, true, 0);
         this.add (box);
-	}
+    }
 
     void on_toggled (Gtk.ToggleButton tb) {
         if (tb.get_active()) {

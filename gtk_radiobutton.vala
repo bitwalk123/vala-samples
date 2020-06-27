@@ -21,7 +21,7 @@ public class MyRadioButton : Gtk.Window {
         box.pack_start (rb2, true, true, 0);
         box.pack_start (rb3, true, true, 0);
         this.add (box);
-	}
+    }
 
     void on_toggled (Gtk.ToggleButton tb) {
         if (tb.get_active()) {
