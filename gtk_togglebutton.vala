@@ -24,12 +24,11 @@ public class MyToggleButton : Gtk.Window {
 
     void on_toggled (Gtk.ToggleButton tb) {
         if (tb.get_active()) {
-			print (tb.get_label() + "は「オン」になりました。\n");
-		}
-		else {
-			print (tb.get_label() + "は「オフ」になりました。\n");
-		}
-	}
+            print (tb.get_label() + "は「オン」になりました。\n");
+        } else {
+            print (tb.get_label() + "は「オフ」になりました。\n");
+        }
+    }
 }
 
 public static int main (string[] args) {
