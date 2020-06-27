@@ -1,65 +1,43 @@
 #!/usr/bin/env vala
 
-public class MyWindow : Gtk.ApplicationWindow {
-	internal MyWindow (MyApplication app) {
-		Object (application: app, title: "ラジオボタン");
+public class MyRadioButton : Gtk.Window {
 
-		this.border_width = 20;
-		this.set_default_size (250, 100);
+    public MyRadioButton () {
+        this.destroy.connect (Gtk.main_quit);
+        this.title = "ラジオボタン";
+        this.border_width = 0;
+        this.window_position = Gtk.WindowPosition.CENTER;
 
-		/* We demonstrate 3 different RadioButton creation methods */
+        var rb1 = new Gtk.RadioButton(null);
+        rb1.set_label("ラジオボタンＡ");
+        rb1.toggled.connect (this.on_toggled);
+        var rb2 = new Gtk.RadioButton.with_label (rb1.get_group(), "ラジオボタンＢ");
+        rb2.toggled.connect (this.on_toggled);
+        var rb3 = new Gtk.RadioButton.with_label (rb1.get_group(), "ラジオボタンＣ");
+        rb3.toggled.connect (this.on_toggled);
 
-		//Create a Radio Button
-		var button1 = new Gtk.RadioButton (null);
-		button1.set_label ("ボタンＡ");
-
-		//Create a RadioButton with a label, and add it to the same group as button1.
-		var button2 = new Gtk.RadioButton.with_label (button1.get_group(),"ボタンＢ");
-
-		//Create a RadioButton with a label, adding it to button1's group.
-		var button3 = new Gtk.RadioButton.with_label_from_widget (button1, "ボタンＣ");
-
-		//Attach the buttons to a grid.
-		var grid = new Gtk.Grid ();
-		grid.attach (button1, 0, 0, 1, 1);
-		grid.attach (button2, 0, 1, 1, 1);
-		grid.attach (button3, 0, 2, 1, 1);
-
-		//Add the button to the window.
-		this.add (grid);
-
-		//Connect the signal handlers (aka. callback functions) to the buttons.
-		button1.toggled.connect (button_toggled_cb);
-		button2.toggled.connect (button_toggled_cb);
-		button3.toggled.connect (button_toggled_cb);
+        Gtk.Box box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+        box.pack_start (rb1, true, true, 0);
+        box.pack_start (rb2, true, true, 0);
+        box.pack_start (rb3, true, true, 0);
+        this.add (box);
 	}
 
-	void button_toggled_cb (Gtk.ToggleButton button)
-	{
-		var state = "unknown";
-
-		if (button.get_active ())
-			state = "on";
-		else {
-			state = "off";
-			print ("\n");
+    void on_toggled (Gtk.ToggleButton tb) {
+        if (tb.get_active()) {
+			print (tb.get_label() + "は「オン」になりました。\n");
 		}
-		print (button.get_label() + " was turned " + state + "\n");
+		else {
+			print (tb.get_label() + "は「オフ」になりました。\n");
+		}
 	}
 }
 
-public class MyApplication : Gtk.Application {
-	protected override void activate () {
+public static int main (string[] args) {
+    Gtk.init (ref args);
 
-		//Show all of the things.
-		new MyWindow (this).show_all ();
-	}
-
-	internal MyApplication () {
-		Object (application_id: "org.example.MyApplication");
-	}
-}
-
-public int main (string[] args) {
-	return new MyApplication ().run (args);
+    MyRadioButton app = new MyRadioButton ();
+    app.show_all ();
+    Gtk.main ();
+    return 0;
 }
