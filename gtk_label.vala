@@ -1,29 +1,27 @@
 #!/usr/bin/env vala
-/*
- * https://developer.gnome.org/gnome-devel-demos/stable/label.vala.html.en
- */
-public class MyWindow : Gtk.ApplicationWindow {
-	internal MyWindow (MyApplication app) {
-		Object (application: app, title: "ラベル");
 
-		var label = new Gtk.Label ("これはラベルです。");
+public class MyLabel : Gtk.Window {
 
-		this.add (label);
-		this.set_default_size (200, 100);
-		this.show_all ();
-	}
+    public MyLabel () {
+        this.destroy.connect (Gtk.main_quit);
+        this.title = "ラベル";
+        this.border_width = 10;
+        this.window_position = Gtk.WindowPosition.CENTER;
+
+        var lab = new Gtk.Label ("これはラベルです。");
+
+        Gtk.Box box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+        box.pack_start (lab, true, true, 0);
+        this.add (box);
+    }
 }
 
-public class MyApplication : Gtk.Application {
-	protected override void activate () {
-		new MyWindow (this).show ();
-	}
+public static int main (string[] args) {
+    Gtk.init (ref args);
 
-	internal MyApplication () {
-		Object (application_id: "org.example.MyApplication");
-	}
+    MyLabel app = new MyLabel ();
+    app.show_all ();
+    Gtk.main ();
+    return 0;
 }
 
-public int main (string[] args) {
-	return new MyApplication ().run (args);
-}
