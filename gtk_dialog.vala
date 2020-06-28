@@ -23,7 +23,7 @@ public class MyDialog : Gtk.Window {
             Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
             null
         );
-		var content_area = dialog.get_content_area ();
+        var content_area = dialog.get_content_area ();
         var msg = new Gtk.TextBuffer(null);
         msg.set_text("このウィンドウは、追加情報を表示するためのダイアログです。");
         var tv = new Gtk.TextView();
