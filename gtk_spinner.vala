@@ -1,55 +1,39 @@
 #!/usr/bin/env vala
-/*
- * https://developer.gnome.org/gnome-devel-demos/stable/spinner.vala.html.en
- */
-public class MyWindow : Gtk.ApplicationWindow {
 
-	Gtk.Widget spinner;
+public class MySpinner : Gtk.Window {
 
-	internal MyWindow (MyApplication app) {
+    Gtk.Spinner spin;
 
-		Object (application: app, title: "Spinner Example");
+    public MySpinner () {
+        this.destroy.connect (Gtk.main_quit);
+        this.title = "スピナー";
+        this.border_width = 0;
+        this.window_position = Gtk.WindowPosition.CENTER;
 
-		this.set_default_size (200, 200);
-		this.border_width = 30;
+        var tb = new Gtk.ToggleButton.with_label ("開始");
+        tb.toggled.connect (this.on_toggled);
+        spin = new Gtk.Spinner ();
+        spin.set_size_request (50, 50);
 
-		spinner = new Gtk.Spinner ();
+        Gtk.Box box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+        box.pack_start (tb, true, true, 0);
+        box.pack_start (spin, true, true, 0);
+        this.add (box);
+    }
 
-		this.add (spinner);
-		(spinner as Gtk.Spinner).active = true;
-		spinner.show ();
-	}
-
-	protected override bool key_press_event (Gdk.EventKey event) {
-
-		//print (Gdk.keyval_name(event.keyval) +"\n");
-		if (Gdk.keyval_name(event.keyval) == "space") {
-
-			if ((spinner as Gtk.Spinner).active) {
-				(spinner as Gtk.Spinner).stop ();
-				//spinner.visible = false;
-			}
-			else {
-				(spinner as Gtk.Spinner).start ();
-				//spinner.visible = true;
-			}
-		}
-		return true;
-	}
+    void on_toggled (Gtk.ToggleButton toggle) {
+        if (toggle.get_active())
+            spin.start ();
+        else
+            spin.stop ();
+    }
 }
 
-public class MyApplication : Gtk.Application {
+public static int main (string[] args) {
+    Gtk.init (ref args);
 
-	protected override void activate () {
-		MyWindow window = new MyWindow (this);
-		window.show ();
-	}
-
-	internal MyApplication () {
-		Object (application_id: "org.example.spinner");
-	}
-}
-
-public int main (string[] args) {
-	return new MyApplication ().run (args);
+    MySpinner app = new MySpinner ();
+    app.show_all ();
+    Gtk.main ();
+    return 0;
 }
