@@ -26,7 +26,7 @@ public class MySwitch : Gtk.Window {
             state = "オフ";
 
         print ("スイッチが「" + state + "」になりました。\n");
-	}
+    }
 }
 
 public static int main (string[] args) {
