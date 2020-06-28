@@ -7,8 +7,8 @@ public class MySpinButton : Gtk.Window {
         this.title = "スピンボタン";
         this.border_width = 0;
         this.window_position = Gtk.WindowPosition.CENTER;
-
-		var sb = new Gtk.SpinButton.with_range (0, 100, 1);
+        
+        var sb = new Gtk.SpinButton.with_range (0, 100, 1);
         sb.value_changed.connect (this.value_changed);
 
         Gtk.Box box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
@@ -17,7 +17,7 @@ public class MySpinButton : Gtk.Window {
     }
 
     void value_changed (Gtk.SpinButton spin) {
-		print ("値が %.0f に変わりました。\n".printf (spin.get_value()));
+        print ("値が %.0f に変わりました。\n".printf (spin.get_value()));
     }
 }
 
