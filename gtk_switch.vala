@@ -17,7 +17,7 @@ public class MySwitch : Gtk.Window {
         this.add (box);
     }
 
-	void switched (Object switcher, ParamSpec pspec) {
+    void switched (Object switcher, ParamSpec pspec) {
         var state = "";
 
         if ((switcher as Gtk.Switch).get_active())
