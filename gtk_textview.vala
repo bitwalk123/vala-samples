@@ -1,34 +1,35 @@
 #!/usr/bin/env vala
-/* This is the application. */
-public class MyApplication : Gtk.Application {
-	/* Override the 'activate' signal of GLib.Application. */
-	protected override void activate () {
-		/* Create the window of this application. */
-		new MyWindow (this).show_all ();
-	}
+
+public class MyTextView : Gtk.Window {
+
+    public MyTextView () {
+        this.destroy.connect (Gtk.main_quit);
+        this.title = "テキストビュー";
+        this.border_width = 0;
+        this.window_position = Gtk.WindowPosition.CENTER;
+        this.set_default_size (200, 200);
+
+        var scr = new Gtk.ScrolledWindow (null, null);
+        scr.set_policy (
+            Gtk.PolicyType.AUTOMATIC,
+            Gtk.PolicyType.AUTOMATIC
+        );
+
+        var tv = new Gtk.TextView ();
+        tv.set_wrap_mode (Gtk.WrapMode.WORD);
+        scr.add (tv);
+
+        Gtk.Box box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+        box.pack_start (scr, true, true, 0);
+        this.add (box);
+    }
 }
 
-/* This is the window. */
-class MyWindow: Gtk.ApplicationWindow {
-	internal MyWindow (MyApplication app) {
-		Object (application: app, title: "TextView Example");
-		this.set_default_size (220, 200);
+public static int main (string[] args) {
+    Gtk.init (ref args);
 
-		var buffer = new Gtk.TextBuffer (null); //stores text to be displayed
-		var textview = new Gtk.TextView.with_buffer (buffer); //displays TextBuffer
-		textview.set_wrap_mode (Gtk.WrapMode.WORD); //sets line wrapping
-
-		var scrolled_window = new Gtk.ScrolledWindow (null, null);
-		scrolled_window.set_policy (Gtk.PolicyType.AUTOMATIC,
-		                            Gtk.PolicyType.AUTOMATIC);
-
-		scrolled_window.add (textview);
-		scrolled_window.set_border_width (5);
-
-		this.add (scrolled_window);
-	}
-}
-/* main creates and runs the application. */
-public int main (string[] args) {
-	return new MyApplication ().run (args);
+    MyTextView app = new MyTextView ();
+    app.show_all ();
+    Gtk.main ();
+    return 0;
 }
