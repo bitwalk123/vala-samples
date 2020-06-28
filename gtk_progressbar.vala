@@ -1,40 +1,45 @@
 #!/usr/bin/env vala
-/*
- * https://developer.gnome.org/gnome-devel-demos/stable/progressbar.vala.html.en
- */
-public class MyApplication : Gtk.Application {
 
-	Gtk.ProgressBar progress_bar;
+public class MyProgressBar : Gtk.Window {
 
-	protected override void activate () {
-		var window = new Gtk.ApplicationWindow (this);
-		window.set_title ("ProgressBar Example");
-		window.set_default_size (220, 20);
+    Gtk.ProgressBar pbar;
 
-		progress_bar = new Gtk.ProgressBar ();
-		window.add (progress_bar);
-		window.show_all ();
+    public MyProgressBar () {
+        this.destroy.connect (Gtk.main_quit);
+        this.title = "プログレスバー";
+        this.border_width = 10;
+        this.window_position = Gtk.WindowPosition.CENTER;
 
-		double fraction = 0.0;
-		progress_bar.set_fraction (fraction);
-		GLib.Timeout.add (500, fill);
-	}
+        pbar = new Gtk.ProgressBar ();
 
-	bool fill () {
-		double fraction = progress_bar.get_fraction (); //get current progress
-		fraction += 0.1; //increase by 10% each time this function is called
+        Gtk.Box box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+        box.pack_start (pbar, true, true, 0);
+        this.add (box);
 
-		progress_bar.set_fraction (fraction);
+        pbar.set_fraction (0.0);
+        GLib.Timeout.add(1000, on_timeout);    
+    }
 
-		/* This function is only called by GLib.Timeout.add while it returns true; */
-		if (fraction < 1.0)
-			return true;
-		return false;
-	}
+    bool on_timeout () {
+        double frac = pbar.get_fraction ();
+        frac += 0.1;
+
+        if (frac <= 1.0) {
+            pbar.set_fraction (frac);
+            return true;
+        } else {
+            pbar.set_fraction (0.0);
+            print("終了しました。\n");
+            return false;
+        }
+    }
 }
 
-public int main (string[] args) {
-	var progress_bar_application = new MyApplication ();
-	int status =  progress_bar_application.run (args);
-	return status;
+public static int main (string[] args) {
+    Gtk.init (ref args);
+
+    MyProgressBar app = new MyProgressBar ();
+    app.show_all ();
+    Gtk.main ();
+    return 0;
 }
