@@ -1,47 +1,39 @@
 #!/usr/bin/env vala
-class MyWindow : Gtk.ApplicationWindow {
 
-	internal MyWindow (MyApplication app) {
-		Object (application: app, title: "Switch Example");
+public class MySwitch : Gtk.Window {
 
-		this.set_default_size (300, 100);
-		this.border_width = 10;
+    public MySwitch () {
+        this.destroy.connect (Gtk.main_quit);
+        this.title = "スイッチ";
+        this.border_width = 0;
+        this.window_position = Gtk.WindowPosition.CENTER;
 
-		var label = new Gtk.Label ("Title");
-		var switcher = new Gtk.Switch ();
+		var sw = new Gtk.Switch ();
+		sw.set_active (true);
+		sw.notify["active"].connect (switched);
 
-		switcher.set_active (true);
+        Gtk.Box box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+        box.pack_end (sw, false, true, 0);
+        this.add (box);
+    }
 
-		switcher.notify["active"].connect (switcher_cb);
+	void switched (Object switcher, ParamSpec pspec) {
+        var state = "";
 
-		var grid = new Gtk.Grid ();
-		grid.set_column_spacing (10);
-		grid.attach (label, 0, 0, 1, 1);
-		grid.attach (switcher, 1, 0, 1, 1);
+        if ((switcher as Gtk.Switch).get_active())
+            state = "オン";
+        else
+            state = "オフ";
 
-		this.add (grid);
-	}
-
-	void switcher_cb (Object switcher, ParamSpec pspec) {
-		if ((switcher as Gtk.Switch).get_active())
-			this.set_title ("Switch Example");
-		else
-			this.set_title ("");
-	}
-}
-
-class MyApplication : Gtk.Application {
-	protected override void activate () {
-
-		var window = new MyWindow (this);
-		window.show_all (); //show all the things
-	}
-
-	internal MyApplication () {
-		Object (application_id: "org.example.checkbutton");
+        print ("スイッチが「" + state + "」になりました。\n");
 	}
 }
 
-int main (string[] args) {
-	return new MyApplication ().run (args);
+public static int main (string[] args) {
+    Gtk.init (ref args);
+
+    MySwitch app = new MySwitch ();
+    app.show_all ();
+    Gtk.main ();
+    return 0;
 }
