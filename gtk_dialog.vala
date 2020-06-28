@@ -1,81 +1,58 @@
 #!/usr/bin/env vala
-/*
- * https://developer.gnome.org/gnome-devel-demos/stable/dialog.vala.html.en
- * /
-/* A window in the application. */
-public class MyWindow : Gtk.ApplicationWindow {
 
-	/* Constructor */
-	internal MyWindow (MyApplication app) {
-		Object (application: app, title: "ボタン");
+public class MyDialog : Gtk.Window {
 
-		this.window_position = Gtk.WindowPosition.CENTER;
-		this.set_default_size (250,50);
+    public MyDialog () {
+        this.destroy.connect (Gtk.main_quit);
+        this.title = "メイン";
+        this.border_width = 0;
+        this.window_position = Gtk.WindowPosition.CENTER;
 
-		var button = new Gtk.Button.with_label ("クリックしてください");
+        var but = new Gtk.Button.with_label ("ダイアログを開く");
+        but.clicked.connect (this.on_clicked);
 
-		/* Connect the button's "clicked" signal to
-		 * the signal handler (aka. this.callback function).
-		 */
-		button.clicked.connect (this.on_button_click);
+        Gtk.Box box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+        box.pack_start (but, true, true, 0);
+        this.add (box);
+    }
 
-		/* Add the button to this window and show it. */
-		this.add (button);
-		button.show ();
-	}
-
-	/* The signal handler for the buttons 'clicked' signal. */
-	void on_button_click (Gtk.Button button) {
-		var dialog = new Gtk.Dialog.with_buttons ("ダイアログ", this,
-														  Gtk.DialogFlags.MODAL,
-                                                          Gtk.Stock.OK,
-                                                          Gtk.ResponseType.OK, null);
-
+    void on_clicked (Gtk.Button button) {
+        var dialog = new Gtk.Dialog.with_buttons (
+            "ダイアログ", this, Gtk.DialogFlags.MODAL,
+            Gtk.Stock.OK, Gtk.ResponseType.OK,
+            Gtk.Stock.CANCEL, Gtk.ResponseType.CANCEL,
+            null
+        );
 		var content_area = dialog.get_content_area ();
-		var label = new Gtk.Label ("ダイアログにラベルを表示したデモです。");
+        var msg = new Gtk.TextBuffer(null);
+        msg.set_text("このウィンドウは、追加情報を表示するためのダイアログです。");
+        var tv = new Gtk.TextView();
+        tv.set_wrap_mode(Gtk.WrapMode.WORD);
+        tv.set_editable(false);
+        tv.set_buffer(msg);
+		content_area.add (tv);
 
-		content_area.add (label);
-
-		/* Connect the 'response' signal of the dialog
-		 * the signal handler.  It is emitted when the dialog's
-		 * OK button is clicked.
-		 */
 		dialog.response.connect (on_response);
 
-		/* Show the dialog and all the widgets. */
 		dialog.show_all ();
-	}
-
-	/* Signal handler for the 'response' signal of the dialog. */
-        void on_response (Gtk.Dialog dialog, int response_id) {
-
-        /* To see the int value of the ResponseType. This is only
-		 * for demonstration purposes.*/
-                print ("response is %d\n", response_id);
-
-		/* This causes the dialog to be destroyed. */
-                dialog.destroy ();
+    }
+    
+    void on_response (Gtk.Dialog dialog, int response_id) {
+        if (response_id == Gtk.ResponseType.OK) {
+            print("「OK」ボタンがクリックされました。\n");
+        } else if (response_id == Gtk.ResponseType.CANCEL) {
+            print("「Cancel」ボタンがクリックされました。\n");
         }
 
+        dialog.destroy ();
+    }
 }
 
-/* This is the application. */
-public class MyApplication : Gtk.Application {
+public static int main (string[] args) {
+    Gtk.init (ref args);
 
-	/* The constructor of the application. */
-	internal MyApplication () {
-		Object (application_id: "org.example.MyApplication");
-	}
-
-	/* Override the 'activate' signal of GLib.Application. */
-	protected override void activate () {
-
-		/* Create a window for the this application and show it. */
-		new MyWindow (this).show ();
-	}
-}
-
-/* The main function creates and runs the application. */
-public int main (string[] args) {
-	return new MyApplication ().run (args);
+    MyDialog app = new MyDialog ();
+    app.show_all ();
+    Gtk.main ();
+    return 0;
 }
