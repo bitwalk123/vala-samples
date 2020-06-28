@@ -1,80 +1,44 @@
 #!/usr/bin/env vala
-/* A window in the application */
-class MyWindow : Gtk.ApplicationWindow {
 
-	/* An instance array of linux distributions belonging to this window. */
-	string[] distros = {"Select distribution", "Fedora", "Mint", "Suse"};
+public class MyComboBox : Gtk.Window {
+    string[] prefectures = {"北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県",
+        "福島県", "茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県",
+        "新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県","静岡県",
+        "愛知県", "新潟県", "富山県", "石川県", "福井県", "山梨県","長野県", "岐阜県",
+        "静岡県", "愛知県", "鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県",
+        "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県", "熊本県", "大分県",
+        "宮崎県", "鹿児島県", "沖縄県"};
 
-	/* This enum makes the code more readable when we refer to
-	 * the column as Column.DISTRO, instead of just 0.
-	 */
-	enum Column {
-		DISTRO
-	}
+    public MyComboBox () {
+        this.destroy.connect (Gtk.main_quit);
+        this.title = "コンボボックス";
+        this.border_width = 0;
+        this.window_position = Gtk.WindowPosition.CENTER;
 
-	/* Constructor */
-	internal MyWindow (MyApplication app) {
-		Object (application: app, title: "Welcome to GNOME");
+        var combo = new Gtk.ComboBoxText ();
+        for (int i = 0; i < prefectures.length; i++) {
+            combo.append_text(prefectures[i]);
+        }
+        combo.set_active (0);
+        combo.changed.connect (this.item_changed);
 
-		this.set_default_size (200, -1);
-		this.border_width = 10;
-
-		Gtk.ListStore liststore = new Gtk.ListStore (1, typeof (string));
-
-		for (int i = 0; i < distros.length; i++){
-			Gtk.TreeIter iter;
-			liststore.append (out iter);
-			liststore.set (iter, Column.DISTRO, distros[i]);
-		}
-
-		Gtk.ComboBox combobox = new Gtk.ComboBox.with_model (liststore);
-		Gtk.CellRendererText cell = new Gtk.CellRendererText ();
-		combobox.pack_start (cell, false);
-
-		combobox.set_attributes (cell, "text", Column.DISTRO);
-
-		/* Set the first item in the list to be selected (active). */
-		combobox.set_active (0);
-
-		/* Connect the 'changed' signal of the combobox
-		 * to the signal handler (aka. callback function).
-		 */
-		combobox.changed.connect (this.item_changed);
-
-		/* Add the combobox to this window */
-		this.add (combobox);
-		combobox.show ();
-	}
-
-	/* Signal handler for the 'changed' signal of the combobox. */
-	void item_changed (Gtk.ComboBox combo) {
+        Gtk.Box box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+        box.pack_start (combo, true, true, 0);
+        this.add (box);
+    }
+    
+    void item_changed (Gtk.ComboBox combo) {
 		if (combo.get_active () !=0) {
-			print ("You chose " + distros [combo.get_active ()] +"\n");
+			stdout.printf ("「%s」が選択されました。\n", prefectures[combo.get_active ()]);
 		}
 	}
 }
 
-/* This is the application */
-class MyApplication : Gtk.Application {
+public static int main (string[] args) {
+    Gtk.init (ref args);
 
-	/* Constructor */
-	internal MyApplication () {
-		Object (application_id: "org.example.MyApplication");
-	}
-
-	/* Override the activate signal of GLib.Application,
-	 * which is inherited by Gtk.Application.
-	 */
-	protected override void activate () {
-
-		/* Create the window of this application
-		 * and show it.
-		 */
-		new MyWindow (this).show ();
-	}
-}
-
-/* main creates and runs the application */
-int main (string[] args) {
-	return new MyApplication ().run (args);
+    MyComboBox app = new MyComboBox ();
+    app.show_all ();
+    Gtk.main ();
+    return 0;
 }
