@@ -30,11 +30,10 @@ public class MyDialog : Gtk.Window {
         tv.set_wrap_mode(Gtk.WrapMode.WORD);
         tv.set_editable(false);
         tv.set_buffer(msg);
-		content_area.add (tv);
-
-		dialog.response.connect (on_response);
-
-		dialog.show_all ();
+        content_area.add (tv);
+        
+        dialog.response.connect (on_response);
+        dialog.show_all ();
     }
     
     void on_response (Gtk.Dialog dialog, int response_id) {
@@ -43,7 +42,6 @@ public class MyDialog : Gtk.Window {
         } else if (response_id == Gtk.ResponseType.CANCEL) {
             print("「Cancel」ボタンがクリックされました。\n");
         }
-
         dialog.destroy ();
     }
 }
