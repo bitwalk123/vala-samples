@@ -1,41 +1,47 @@
 #!/usr/bin/env vala
-public class MyWindow : Gtk.ApplicationWindow {
 
-	Gtk.Widget progress_bar;
+public class MyGrid : Gtk.Window {
 
-	internal MyWindow (MyApplication app) {
-		Object (application: app, title: "Grid Example");
-		var grid = new Gtk.Grid();
-		progress_bar = new Gtk.ProgressBar ();
-		progress_bar.show ();
+    public MyGrid () {
+        this.destroy.connect (Gtk.main_quit);
+        this.title = "Grid";
+        this.border_width = 0;
+        this.window_position = Gtk.WindowPosition.CENTER;
 
-		var button = new Gtk.Button.with_label ("Button");
-		button.clicked.connect (on_button_click);
-		button.show ();
+        var but0 = new Gtk.Button.with_label ("０");
+        var but1 = new Gtk.Button.with_label ("１");
+        var but2 = new Gtk.Button.with_label ("２");
+        var but3 = new Gtk.Button.with_label ("３");
+        var but4 = new Gtk.Button.with_label ("４");
+        var but5 = new Gtk.Button.with_label ("５");
+        var but6 = new Gtk.Button.with_label ("６");
+        var but7 = new Gtk.Button.with_label ("７");
+        var but8 = new Gtk.Button.with_label ("８");
+        var but9 = new Gtk.Button.with_label ("９");
 
-		this.add(grid);
-		grid.attach(button, 0, 1, 1, 1);
-		grid.attach_next_to (progress_bar, button, Gtk.PositionType.BOTTOM, 1, 1);
-		grid.show ();
-	}
+        var grid = new Gtk.Grid();
+        this.add(grid);
 
-	void on_button_click (Gtk.Button button) {
-		(progress_bar as Gtk.ProgressBar).pulse ();
-	}
+        grid.attach(but0, 0, 0, 1, 1);
+        grid.attach(but1, 1, 0, 1, 1);
+        grid.attach(but2, 2, 0, 1, 1);
+        grid.attach(but3, 3, 0, 1, 1);
+
+        grid.attach(but4, 0, 1, 1, 1);
+        grid.attach(but5, 1, 1, 1, 1);
+        grid.attach(but6, 2, 1, 1, 1);
+        grid.attach(but7, 3, 1, 1, 2);
+
+        grid.attach(but8, 0, 2, 2, 1);
+        grid.attach(but9, 2, 2, 1, 1);
+    }
 }
 
-public class MyApplication : Gtk.Application {
-	protected override void activate () {
+public static int main (string[] args) {
+    Gtk.init (ref args);
 
-		new MyWindow (this).show ();
-	}
-
-	internal MyApplication () {
-		Object (application_id: "org.example.MyApplication");
-
-	}
-}
-
-public int main (string[] args) {
-	return new MyApplication ().run (args);
+    MyGrid app = new MyGrid ();
+    app.show_all ();
+    Gtk.main ();
+    return 0;
 }
